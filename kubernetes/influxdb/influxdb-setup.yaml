@@ -20,10 +20,17 @@ spec:
             - -o
             - InfluxData
             - -p
-            - cloudnative
+            - change1t
             - -u
-            - rawkode
+            - admin
             - -t
             - secret-token
             - -f
+          volumeMounts:
+            - mountPath: /root/.influxdbv2
+              name: influxdbv2
+      volumes:
+        - name: influxdbv2
+          persistentVolumeClaim:
+            claimName: influxdb-pvc
       restartPolicy: Never

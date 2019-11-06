@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: default
+data:
+  nginx.conf: |
+    #user  nobody;
+    worker_processes  1;
+    #error_log  logs/error.log;
+    #error_log  logs/error.log  notice;
+    #error_log  logs/error.log  info;
+    #pid        logs/nginx.pid;
+    events {
+      worker_connections  1024;
+    }
+    http {
+      include       mime.types;
+      default_type  application/octet-stream;
+      #access_log  logs/access.log  main;
+      sendfile        on;
+      #tcp_nopush     on;
+      #keepalive_timeout  0;
+      keepalive_timeout  65;
+      #gzip  on;
+
+      server {
+        listen 80;
+        listen [::]:80;
+        server_name localhost;
+        location / {
+          proxy_pass http://influxdb.monitoring:9999;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_redirect off;
+        }
+        location /nginx_status {
+          stub_status on;
+          access_log  on;
+          allow all;
+        }
+      }
+    }
+
+
+
+

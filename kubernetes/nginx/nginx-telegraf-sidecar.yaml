@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-nginx-config
+  namespace: default
+data:
+  telegraf.conf: |+
+    [[outputs.influxdb_v2]]
+      urls = ["http://influxdb.monitoring:9999"]
+      organization = "InfluxData"
+      bucket = "kubernetes"
+      token = "secret-token"
+    [[inputs.statsd]]
+      protocol = "udp"
+      max_tcp_connections = 250
+      tcp_keep_alive = false
+      service_address = ":8125"
+      delete_gauges = true
+      delete_counters = true
+      delete_sets = true
+      delete_timings = true
+      percentiles = [50.0, 90.0, 99.0, 99.9, 99.95, 100.0]
+      metric_separator = "_"
+      parse_data_dog_tags = false
+      datadog_extensions = false
+      allowed_pending_messages = 10000
+      percentile_limit = 1000
+    [[inputs.nginx]]
+      urls = ["http://127.0.0.1/nginx_status"]

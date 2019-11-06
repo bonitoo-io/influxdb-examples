@@ -16,7 +16,7 @@ up:
 	@echo -e "$(WHITEB)Installing Helm$(CLEAR)"
 	@helm init --wait
 	@echo -e "$(WHITEB)Installing Consul (via Helm)$(CLEAR)"
-	@helm upgrade --install consul stable/consul
+	@helm upgrade --install consul stable/consul --set StorageClass=gp2
 	@echo -e "$(WHITEB)Installing Prometheus Exporters$(CLEAR)"
 	@kubectl apply -f prometheus/exporters
 

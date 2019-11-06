@@ -19,7 +19,7 @@ spec:
             name: telegraf-nodes
       containers:
         - name: telegraf-nodes
-          image: telegraf:1.11
+          image: telegraf:1.12.4
           resources: {}
           volumeMounts:
             - name: telegraf-config
