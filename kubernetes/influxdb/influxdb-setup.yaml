@@ -26,11 +26,4 @@ spec:
             - -t
             - secret-token
             - -f
-          volumeMounts:
-            - mountPath: /root/.influxdbv2
-              name: influxdbv2
-      volumes:
-        - name: influxdbv2
-          persistentVolumeClaim:
-            claimName: influxdb-pvc
       restartPolicy: Never
