@@ -17,6 +17,15 @@ spec:
         - name: telegraf-config
           configMap:
             name: telegraf-nodes
+        - name: sysro
+          hostPath:
+            path: /sys
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+        - name: procro
+          hostPath:
+            path: /proc
       containers:
         - name: telegraf-nodes
           image: telegraf:1.12.4
@@ -25,8 +34,22 @@ spec:
             - name: telegraf-config
               mountPath: /etc/telegraf/telegraf.conf
               subPath: telegraf.conf
+            - name: sysro
+              mountPath: /rootfs/sys
+              readOnly: true
+            - name: procro
+              mountPath: /rootfs/proc
+              readOnly: true
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
           env:
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: "HOST_PROC"
+              value: "/rootfs/proc"
+            - name: "HOST_SYS"
+              value: "/rootfs/sys"
+
+

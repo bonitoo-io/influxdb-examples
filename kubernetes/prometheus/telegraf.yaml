@@ -19,9 +19,14 @@ spec:
             name: telegraf-prometheus
       containers:
         - name: telegraf-prometheus
-          image: telegraf:1.11
+          image: telegraf:1.12.4
           resources: {}
           volumeMounts:
             - name: telegraf-config
               mountPath: /etc/telegraf/telegraf.conf
               subPath: telegraf.conf
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName

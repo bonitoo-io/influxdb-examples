@@ -18,3 +18,9 @@ data:
       insecure_skip_verify = true
       resource_exclude = []
       resource_include = []
+    [[inputs.http_response]]
+      urls = ["http://resource-consumer.default.svc.cluster.local:8180/"]
+      response_timeout = "5s"
+      method = "GET"
+
+
