@@ -5,11 +5,12 @@ metadata:
   namespace: default
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - http:
         paths:
-          - path: /resource-consumer
+          - path: /resource-consumer(/|$)(.*)
             backend:
               serviceName: resource-consumer
               servicePort: 8180

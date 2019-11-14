@@ -29,7 +29,8 @@ data:
       totalcpu = true
 
     [[inputs.disk]]
-      ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+      mount_points = ["/"]
+      ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "aufs", "squashfs"]
 
     [[inputs.diskio]]
 

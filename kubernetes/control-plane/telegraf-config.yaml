@@ -19,7 +19,7 @@ data:
       resource_exclude = []
       resource_include = []
     [[inputs.http_response]]
-      urls = ["http://resource-consumer.default.svc.cluster.local:8180/"]
+      urls = ["http://nginx.default.svc.cluster.local:8080/stub_status"]
       response_timeout = "5s"
       method = "GET"
 

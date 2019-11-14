@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: influxdb
   namespace: monitoring
 spec:
+  serviceName: influxdb
   selector:
     matchLabels:
       app: influxdb
@@ -22,8 +23,11 @@ spec:
           image: quay.io/influxdb/influxdb:2.0.0-alpha
           resources:
             limits:
-              memory: "1024Mi"
-              cpu: "1000m"
+              memory: "3Gi"
+              cpu: "2"
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
           ports:
             - containerPort: 9999
           volumeMounts:
