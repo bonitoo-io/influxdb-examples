@@ -1,0 +1,43 @@
+kind: DaemonSet
+apiVersion: extensions/v1beta1
+metadata:
+  name: logging-syslog
+spec:
+  template:
+    metadata:
+      labels:
+        name: logging-syslog
+    spec:
+      containers:
+        - name: rsyslog
+          image: "kincl/kubernetes-logging-syslog:latest"
+          imagePullPolicy: Always
+          env:
+            - name: RSYSLOG_TARGET
+              value: "127.0.0.1"
+            - name: RSYSLOG_PORT
+              value: "6514"
+            - name: RSYSLOG_PROTOCOL
+              value: udp
+          volumeMounts:
+            - name: host-container-logs-k8s
+              mountPath: /var/log/containers
+            - name: host-container-logs-docker
+              mountPath: /var/lib/docker/containers
+            - name: rsyslog-state-dir
+              mountPath: /var/lib/rsyslog
+            - name: host-timezone
+              mountPath: /etc/localtime
+      volumes:
+        - name: host-container-logs-k8s
+          hostPath:
+            path: /var/log/containers
+        - name: host-container-logs-docker
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: rsyslog-state-dir
+          hostPath:
+            path: /var/lib/rsyslog
+        - name: host-timezone
+          hostPath:
+            path: /etc/localtime

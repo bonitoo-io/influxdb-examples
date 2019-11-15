@@ -7,15 +7,14 @@ data:
   telegraf.conf: |
     [[outputs.influxdb_v2]]
       urls = ["http://influxdb.monitoring:9999"]
-
       organization = "InfluxData"
       bucket = "kubernetes"
       token = "secret-token"
-
     [[inputs.prometheus]]
       monitor_kubernetes_pods = true
       # monitor_kubernetes_pods_namespace = ""
       kubernetes_services = ["https://kubernetes.default.svc.cluster.local/metrics","https://kubernetes.default.svc.cluster.local/api/v1/nodes/$NODE_NAME/proxy/metrics"]
-
       bearer_token = "/run/secrets/kubernetes.io/serviceaccount/token"
       insecure_skip_verify = true
+    [[inputs.internal]]
+      collect_memstats = true

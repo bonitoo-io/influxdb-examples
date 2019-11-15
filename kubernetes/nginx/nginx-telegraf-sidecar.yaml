@@ -12,3 +12,5 @@ data:
       token = "secret-token"
     [[inputs.nginx]]
       urls = ["http://127.0.0.1/stub_status"]
+    [[inputs.internal]]
+      collect_memstats = true

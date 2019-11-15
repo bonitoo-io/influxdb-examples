@@ -7,11 +7,9 @@ data:
   telegraf.conf: |
     [[outputs.influxdb_v2]]
       urls = ["http://influxdb.monitoring:9999"]
-
       organization = "InfluxData"
       bucket = "kubernetes"
       token = "secret-token"
-
     [[inputs.kube_inventory]]
       url = "https://kubernetes.default"
       bearer_token = "/run/secrets/kubernetes.io/serviceaccount/token"
@@ -22,5 +20,8 @@ data:
       urls = ["http://nginx.default.svc.cluster.local:8080/stub_status"]
       response_timeout = "5s"
       method = "GET"
+    [[inputs.internal]]
+      collect_memstats = true
+
 
 
