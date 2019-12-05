@@ -34,7 +34,7 @@ spec:
             - mountPath: /etc/nginx/nginx.conf
               name: nginx-vol
               subPath: nginx.conf
-        - image: telegraf:1.12.4
+        - image: telegraf:1.12.5
           name: telegraf-sidecar
 #          env:
 #            - name: POD_NAME

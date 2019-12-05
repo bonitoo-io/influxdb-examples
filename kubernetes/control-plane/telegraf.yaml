@@ -17,11 +17,28 @@ spec:
         - name: telegraf-config
           configMap:
             name: telegraf-control-plane
+        - name: credentials
+          secret:
+            secretName: aws-service-user
       containers:
         - name: telegraf-control-plane
-          image: telegraf:1.12.4
+          image: telegraf:1.12.5
           resources: {}
           volumeMounts:
             - name: telegraf-config
-              mountPath: /etc/telegraf/telegraf.conf
-              subPath: telegraf.conf
+              mountPath: /etc/telegraf
+            - name: credentials
+              mountPath: /root/.aws/
+              readOnly: true
+          env:
+            - name: EU_CENTRAL_1_1
+              valueFrom:
+                secretKeyRef:
+                  name: eu-central-1-1
+                  key: token
+            - name: US_WEST_2_1
+              valueFrom:
+                secretKeyRef:
+                  name: us-west-2-1
+                  key: token
+

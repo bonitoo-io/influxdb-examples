@@ -21,12 +21,13 @@ spec:
       containers:
         - name: influxdb
           image: quay.io/influxdb/influxdb:2.0.0-alpha
+          imagePullPolicy: Always
           resources:
             limits:
-              memory: "3Gi"
+              memory: "7Gi"
               cpu: "2"
             requests:
-              memory: "1Gi"
+              memory: "3Gi"
               cpu: "500m"
           ports:
             - containerPort: 9999

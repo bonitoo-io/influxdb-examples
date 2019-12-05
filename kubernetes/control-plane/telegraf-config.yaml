@@ -5,11 +5,27 @@ metadata:
   namespace: monitoring
 data:
   telegraf.conf: |
+    [agent]
+      debug = true
+      interval = "10s"
+      flush_interval = "10s"
+    #[[outputs.file]]
+    # files = ["stdout"]
     [[outputs.influxdb_v2]]
       urls = ["http://influxdb.monitoring:9999"]
       organization = "InfluxData"
       bucket = "kubernetes"
       token = "secret-token"
+    [[outputs.influxdb_v2]]
+      urls = ["https://eu-central-1-1.aws.cloud2.influxdata.com"]
+      token = "$EU_CENTRAL_1_1"
+      organization = "daniella.pontes@influxdata.com"
+      bucket = "kubernetes"
+    [[outputs.influxdb_v2]]
+      urls = ["https://us-west-2-1.aws.cloud2.influxdata.com"]
+      token = "$US_WEST_2_1"
+      organization = "daniella@influxdata.com"
+      bucket = "kubernetes"
     [[inputs.kube_inventory]]
       url = "https://kubernetes.default"
       bearer_token = "/run/secrets/kubernetes.io/serviceaccount/token"
@@ -22,6 +38,29 @@ data:
       method = "GET"
     [[inputs.internal]]
       collect_memstats = true
+    [[inputs.cloudwatch]]
+      region = "us-west-2"
+      shared_credential_file = "/root/.aws/credentials"
+      period = "1m"
+      delay = "5m"
+      interval = "1m"
+      namespace = "AWS/EC2"
+      ratelimit = 25
+      [[inputs.cloudwatch.metrics]]
+        names = ["StatusCheckFailed","EBSReadBytes","CPUSurplusCreditsCharged","EBSByteBalance%","StatusCheckFailed_System","EBSWriteBytes","NetworkIn","CPUCreditUsage","EBSIOBalance%","EBSReadOps","CPUCreditBalance","StatusCheckFailed_Instance","CPUUtilization","NetworkOut"]
+        [[inputs.cloudwatch.metrics.dimensions]]
+          name = "InstanceId"
+          value = "i-06025f2fbf47c26ac"
+    [[inputs.cloudwatch]]
+      region = "us-west-2"
+      shared_credential_file = "/root/.aws/credentials"
+      period = "1m"
+      delay = "15m"
+      interval = "1m"
+      namespace = "AWS/NetworkELB"
+      ratelimit = 25
+
+
 
 
 

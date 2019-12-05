@@ -5,6 +5,9 @@ metadata:
   namespace: default
 data:
   telegraf.conf: |+
+    [agent]
+      interval = "10s"
+      flush_interval = "10s"
     [[outputs.influxdb_v2]]
       urls = ["http://influxdb.monitoring:9999"]
       organization = "InfluxData"

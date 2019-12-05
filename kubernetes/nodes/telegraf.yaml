@@ -28,7 +28,7 @@ spec:
             path: /proc
       containers:
         - name: telegraf-nodes
-          image: telegraf:1.12.4
+          image: telegraf:1.12.5
           resources: {}
           volumeMounts:
             - name: telegraf-config
