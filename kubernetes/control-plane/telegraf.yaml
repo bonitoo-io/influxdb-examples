@@ -12,7 +12,7 @@ spec:
       labels:
         app: telegraf-control-plane
     spec:
-      serviceAccount: telegraf
+      serviceAccountName: telegraf
       volumes:
         - name: telegraf-config
           configMap:
@@ -22,7 +22,8 @@ spec:
             secretName: aws-service-user
       containers:
         - name: telegraf-control-plane
-          image: telegraf:1.12.5
+          image: reckod/telegraf:watch-config
+          args: ["--watch-config","on","--config","/etc/telegraf/telegraf.conf"]
           resources: {}
           volumeMounts:
             - name: telegraf-config

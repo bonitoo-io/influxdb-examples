@@ -12,7 +12,7 @@ spec:
       labels:
         app: telegraf-nodes
     spec:
-      serviceAccount: telegraf
+      serviceAccountName: telegraf
       volumes:
         - name: telegraf-config
           configMap:
@@ -28,12 +28,12 @@ spec:
             path: /proc
       containers:
         - name: telegraf-nodes
-          image: telegraf:1.12.5
+          image: reckod/telegraf:watch-config
+          args: ["--watch-config","on","--config","/etc/telegraf/telegraf.conf"]
           resources: {}
           volumeMounts:
             - name: telegraf-config
-              mountPath: /etc/telegraf/telegraf.conf
-              subPath: telegraf.conf
+              mountPath: /etc/telegraf
             - name: sysro
               mountPath: /rootfs/sys
               readOnly: true

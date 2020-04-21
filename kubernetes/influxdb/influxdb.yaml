@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: influxdb
-          image: quay.io/influxdb/influxdb:2.0.0-alpha
+          image: quay.io/influxdb/influxdb:2.0.0-beta
           imagePullPolicy: Always
           resources:
             limits:
@@ -38,21 +38,21 @@ spec:
         - name: influxdbv2
           persistentVolumeClaim:
             claimName: influxdb-pvc
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: influxdb
-  name: influxdb
-  namespace: monitoring
-#  annotations:
-#    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-#    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: true
-spec:
-  selector:
-    app: influxdb
-  type: ClusterIP
-  ports:
-    - port: 9999
-      targetPort: 9999
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  labels:
+#    app: influxdb
+#  name: influxdb
+#  namespace: monitoring
+##  annotations:
+##    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+##    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: true
+#spec:
+#  selector:
+#    app: influxdb
+#  type: ClusterIP
+#  ports:
+#    - port: 9999
+#      targetPort: 9999
